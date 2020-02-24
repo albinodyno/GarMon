@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using MimeKit;
 using MailKit.Net.Smtp;
+using Windows.UI;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -26,11 +27,91 @@ namespace GarMon.App
     public sealed partial class MainPage : Page
     {
         int ticks = 0;
+        int checks = 0;
+        bool open = false;
+        //string status = "Closed";
+        bool sent = false;
+
         DispatcherTimer timer = new DispatcherTimer();
         public MainPage()
         {
             this.InitializeComponent();
-            SendEmail();
+
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += TimerTick;
+            timer.Start();
+        }
+
+        private void TimerTick(object sender, object e)
+        {
+            UpdateBoard();
+
+            ticks++;
+            if (ticks >= 60)
+            {
+                ticks = 0;
+                CheckDoor();
+            }
+        }
+
+        private void CheckDoor()
+        {
+
+
+            //Check if sensor senses door
+
+            open = true;
+            //or
+            //open = false;
+
+            if (open)
+            {
+                HandleOpen();
+            }
+            else
+            {
+                checks = 0;
+                sent = false;
+            }
+        }
+
+        private void HandleOpen()
+        {
+            checks++;
+            open = true;
+            //status = ":::OPEN:::";
+
+            if (checks > 0 && !sent)
+            {
+                //SendEmail();
+                sent = true;
+            }
+        }
+
+        private void UpdateBoard()
+        {
+            txbTimer.Text = (60 - ticks).ToString();
+            txbChecks.Text = "Checks : " + checks.ToString();
+
+            if (!open)
+            {
+                txbStatus.Text = "Status : Closed";
+                txbStatus.Foreground = new SolidColorBrush(Colors.DarkCyan);
+            }
+            else
+            {
+                txbStatus.Text = "Status :::OPEN:::";
+                txbStatus.Foreground = new SolidColorBrush(Colors.OrangeRed);
+            }
+
+            if (!open && !sent)
+                txbEStatus.Text = "";
+            else if (open && !sent)
+                txbEStatus.Text = $"Not Sent: {5 - checks} left";
+            else
+                txbEStatus.Text = "Email :::SENT:::";
+
+
         }
 
         private void SendEmail()
