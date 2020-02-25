@@ -33,5 +33,12 @@
                    Text="E-STATUS" FontSize="60" FontFamily="OCR A Extended" Foreground="DarkCyan" />
         </StackPanel>
 
+        <StackPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10"
+                   Text="Sensor" FontSize="60" FontFamily="OCR A Extended" Foreground="DarkGoldenrod" />
+            <TextBlock Name="txbSensorStatus" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10"
+                   Text="OFFLINE" FontSize="60" FontFamily="OCR A Extended" Foreground="DarkCyan" />
+        </StackPanel>
+
     </Grid>
 </Page>

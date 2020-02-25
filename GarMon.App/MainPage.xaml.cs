@@ -18,9 +18,8 @@ using Windows.UI.Xaml.Navigation;
 using MimeKit;
 using MailKit.Net.Smtp;
 using Windows.UI;
-
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+using Windows.Devices.Gpio;
+using Windows.UI.Core;
 
 namespace GarMon.App
 {
@@ -29,10 +28,13 @@ namespace GarMon.App
         int ticks = 0;
         int checks = 0;
         bool open = false;
-        //string status = "Closed";
         bool sent = false;
 
+        GpioController gpio;
+        GpioPin pin5;
+
         DispatcherTimer timer = new DispatcherTimer();
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -40,29 +42,56 @@ namespace GarMon.App
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += TimerTick;
             timer.Start();
+
+            SetupGPIOPins();
         }
 
         private void TimerTick(object sender, object e)
         {
-            UpdateBoard();
-
             ticks++;
             if (ticks >= 60)
             {
                 ticks = 0;
                 CheckDoor();
+                UpdateBoard();
+                UpdateSQL();
             }
         }
 
+        private void SetupGPIOPins()
+        {
+            gpio = GpioController.GetDefault();
+
+            if (gpio == null)
+                return; // GPIO not available on this system
+
+            using (pin5 = gpio.OpenPin(5))
+            {
+                // Latch HIGH value first. This ensures a default value when the pin is set as output
+                pin5.Write(GpioPinValue.High);
+
+                // Set the IO direction as input
+                pin5.SetDriveMode(GpioPinDriveMode.Input);
+
+                string read = pin5.Read().ToString();
+
+            } // Close pin - will revert to its power-on state
+        }
+
+
+
         private void CheckDoor()
         {
-
-
             //Check if sensor senses door
+            //https://tutorials-raspberrypi.com/raspberry-pi-ultrasonic-sensor-hc-sr04/
+            //https://github.com/microsoft/Windows-universal-samples/blob/master/Samples/ProximitySensor/cs/Scenario1_DataEvents.xaml.cs
 
-            open = true;
+            //magnet sensors: https://tutorials-raspberrypi.com/raspberry-pi-door-window-sensor-with-reed-relais/
+
+            //open = true;
             //or
             //open = false;
+
 
             if (open)
             {
@@ -70,6 +99,7 @@ namespace GarMon.App
             }
             else
             {
+                open = false;
                 checks = 0;
                 sent = false;
             }
@@ -78,10 +108,8 @@ namespace GarMon.App
         private void HandleOpen()
         {
             checks++;
-            open = true;
-            //status = ":::OPEN:::";
 
-            if (checks > 0 && !sent)
+            if (checks > 10 && !sent)
             {
                 //SendEmail();
                 sent = true;
@@ -111,6 +139,15 @@ namespace GarMon.App
             else
                 txbEStatus.Text = "Email :::SENT:::";
 
+            if (pin5 == null)
+                txbSensorStatus.Text = "Offline";
+            else
+                txbSensorStatus.Text = "Online";
+
+        }
+
+        private void UpdateSQL()
+        {
 
         }
 

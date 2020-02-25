@@ -20,17 +20,24 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBlock x:ConnectionId='1' Name="txbTimer" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10"
+            <TextBlock x:ConnectionId='2' Name="txbTimer" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10"
                    Text="TIMER" FontSize="76" FontFamily="Gadugi" Foreground="DarkCyan" />
 
-            <TextBlock x:ConnectionId='2' Name="txbChecks" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10"
+            <TextBlock x:ConnectionId='3' Name="txbChecks" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10"
                    Text="CHECKS" FontSize="60" FontFamily="OCR A Extended" Foreground="DarkCyan" />
 
-            <TextBlock x:ConnectionId='3' Name="txbStatus" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10"
+            <TextBlock x:ConnectionId='4' Name="txbStatus" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10"
                    Text="STATUS" FontSize="60" FontFamily="OCR A Extended" Foreground="DarkCyan" />
             
-            <TextBlock x:ConnectionId='4' Name="txbEStatus" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10"
+            <TextBlock x:ConnectionId='5' Name="txbEStatus" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10"
                    Text="E-STATUS" FontSize="60" FontFamily="OCR A Extended" Foreground="DarkCyan" />
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10"
+                   Text="Sensor" FontSize="60" FontFamily="OCR A Extended" Foreground="DarkGoldenrod" />
+            <TextBlock x:ConnectionId='1' Name="txbSensorStatus" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10"
+                   Text="OFFLINE" FontSize="60" FontFamily="OCR A Extended" Foreground="DarkCyan" />
         </StackPanel>
 
     </Grid>
