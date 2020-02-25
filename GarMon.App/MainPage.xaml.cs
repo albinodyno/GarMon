@@ -49,11 +49,12 @@ namespace GarMon.App
         private void TimerTick(object sender, object e)
         {
             ticks++;
+            UpdateBoard();
+
             if (ticks >= 60)
             {
                 ticks = 0;
                 CheckDoor();
-                UpdateBoard();
                 UpdateSQL();
             }
         }
@@ -156,11 +157,11 @@ namespace GarMon.App
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress("Joey Tribbiani", "jbbuchanan266@gmail.com"));
             message.To.Add(new MailboxAddress("Mrs. Chanandler Bong", "jbbuchanan266@gmail.com"));
-            message.Subject = "How you doin'?";
+            message.Subject = $"Garage Door: {DateTime.Now}";
 
             message.Body = new TextPart("plain")
             {
-                Text = @"Hey Chandler,I just wanted to let you know that Monica and I were going to go play some paintball, you in?-- Joey"
+                Text = $"Garage door open at {DateTime.Now}"
             };
 
             using (var client = new SmtpClient())
