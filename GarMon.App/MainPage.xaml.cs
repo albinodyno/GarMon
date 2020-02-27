@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Mail;
+//using System.Net.Mail;
 using System.Net;
 using System.Net.Security;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -25,13 +25,18 @@ namespace GarMon.App
 {
     public sealed partial class MainPage : Page
     {
+        int tickInterval = 30;
+        int checksToEmail = 3;
+
         int ticks = 0;
         int checks = 0;
+
+        bool sensorOffline;
         bool open = false;
         bool sent = false;
 
         GpioController gpio;
-        GpioPin pin5;
+        GpioPin reedPin;
 
         DispatcherTimer timer = new DispatcherTimer();
 
@@ -44,18 +49,24 @@ namespace GarMon.App
             timer.Start();
 
             SetupGPIOPins();
+            UpdateBoard();
         }
 
         private void TimerTick(object sender, object e)
         {
             ticks++;
-            UpdateBoard();
+            txbTimer.Text = (tickInterval - ticks).ToString();
+            //SendEmail();
 
-            if (ticks >= 60)
+            if (ticks >= tickInterval)
             {
                 ticks = 0;
                 CheckDoor();
+                UpdateBoard();
                 UpdateSQL();
+
+                if (sensorOffline)
+                    SetupGPIOPins();
             }
         }
 
@@ -64,22 +75,38 @@ namespace GarMon.App
             gpio = GpioController.GetDefault();
 
             if (gpio == null)
+            {
+                sensorOffline = true;
                 return; // GPIO not available on this system
+            }
 
-            using (pin5 = gpio.OpenPin(5))
+
+            using (reedPin = gpio.OpenPin(5))
             {
                 // Latch HIGH value first. This ensures a default value when the pin is set as output
-                pin5.Write(GpioPinValue.High);
+                //reedPin.Write(GpioPinValue.High);
 
                 // Set the IO direction as input
-                pin5.SetDriveMode(GpioPinDriveMode.Input);
+                reedPin.SetDriveMode(GpioPinDriveMode.Input);
 
-                string read = pin5.Read().ToString();
+                //probably a better way to run this program instead of running a timer non-stop:
+                //event triggers when pin value changed
+                //start timer, after so long send email
+                //stop timer when pin changed again, send email saying its closed 
+                //(uncomment below)
 
-            } // Close pin - will revert to its power-on state
+                //reedPin.ValueChanged += PinChange;
+                sensorOffline = false;
+            }
         }
 
-
+        private void PinChange(object sender, object e)
+        {
+            if (reedPin.Read() == GpioPinValue.High)
+            {
+                open = true;
+            }
+        }
 
         private void CheckDoor()
         {
@@ -89,13 +116,14 @@ namespace GarMon.App
 
             //magnet sensors: https://tutorials-raspberrypi.com/raspberry-pi-door-window-sensor-with-reed-relais/
 
-            //open = true;
-            //or
-            //open = false;
+            //Reed Sensor map: When the switch block stand alone, there is continuity from "COM" to "NC". 
+            //Introducing a magnetic field from the second block switches continuity from "COM" to "NO". 
+            //Note that there are small triangle symbols on the switch to indicate the internal magnet location in the block. 
+            //These triangles should be less than 5mm apart to activate the switch
 
-
-            if (open)
+            if (reedPin != null && reedPin.Read() == GpioPinValue.High)
             {
+                open = true;
                 HandleOpen();
             }
             else
@@ -110,16 +138,15 @@ namespace GarMon.App
         {
             checks++;
 
-            if (checks > 10 && !sent)
+            if (checks > 1 && !sent)
             {
-                //SendEmail();
+                SendEmail();
                 sent = true;
             }
         }
 
         private void UpdateBoard()
         {
-            txbTimer.Text = (60 - ticks).ToString();
             txbChecks.Text = "Checks : " + checks.ToString();
 
             if (!open)
@@ -136,11 +163,11 @@ namespace GarMon.App
             if (!open && !sent)
                 txbEStatus.Text = "";
             else if (open && !sent)
-                txbEStatus.Text = $"Not Sent: {5 - checks} left";
+                txbEStatus.Text = $"Not Sent: {checksToEmail - checks} left";
             else
                 txbEStatus.Text = "Email :::SENT:::";
 
-            if (pin5 == null)
+            if (reedPin == null)
                 txbSensorStatus.Text = "Offline";
             else
                 txbSensorStatus.Text = "Online";
@@ -155,8 +182,9 @@ namespace GarMon.App
         private void SendEmail()
         {
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("Joey Tribbiani", "jbbuchanan266@gmail.com"));
-            message.To.Add(new MailboxAddress("Mrs. Chanandler Bong", "jbbuchanan266@gmail.com"));
+
+            message.Sender = new MailboxAddress("Jared Buchanan", "jbbuchanan266@gmail.com");
+            message.To.Add(new MailboxAddress("Jared Buchanan", "jbbuchanan266@gmail.com"));
             message.Subject = $"Garage Door: {DateTime.Now}";
 
             message.Body = new TextPart("plain")
@@ -166,15 +194,9 @@ namespace GarMon.App
 
             using (var client = new SmtpClient())
             {
-                client.Connect("smtp.gmail.com", 587);
-
-
-                // Note: since we don't have an OAuth2 token, disable
-                // the XOAUTH2 authentication mechanism.
-                client.AuthenticationMechanisms.Remove("XOAUTH2");
-
-                // Note: only needed if the SMTP server requires authentication
-                client.Authenticate("YOUR_GMAIL_NAME", "YOUR_PASSWORD");
+                client.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
+                client.Authenticate("jbbuchanan266@gmail.com", "Motorola266!");
+                client.AuthenticationMechanisms.Remove("XOAUTH2");                
 
                 client.Send(message);
                 client.Disconnect(true);
