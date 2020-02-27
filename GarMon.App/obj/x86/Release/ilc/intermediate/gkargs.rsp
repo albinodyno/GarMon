@@ -1,0 +1,10 @@
+﻿"C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\obj\x86\Release\ilc\in\BouncyCastle.Crypto.dll"
+"C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\obj\x86\Release\ilc\in\GarMon.App.exe"
+"C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\obj\x86\Release\ilc\in\MailKit.dll"
+"C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\obj\x86\Release\ilc\in\MimeKit.dll"
+/Lib:"C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\obj\x86\Release\ilc\in"
+/Lib:"C:\Program Files (x86)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.microsoft.net.native.compiler\2.2.7-rel-27913-00\tools\x86\ilc\lib\Private"
+/WinMD:"C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\obj\x86\Release\ilc\in\WinMetadata\Windows.winmd"
+/VSTelemetrySessionSettings:"{"IsOptedIn":true,"HostName":"Dev14","AppInsightsInstrumentationKey":"f144292e-e3b2-4011-ac90-20e5c03fbce5","AsimovInstrumentationKey":"AIF-312cbd79-9dbb-4c48-a7da-3cc2a931cb70","AppId":1001,"UserId":"25936d44-3b20-4f89-9a90-2c84b6c492a3","Id":"fde690a4-5e60-484c-97a7-5a967e6004fc","ProcessStartTime":637184393297411194}"
+/RdXmlPath:"C:\Program Files (x86)\Microsoft SDKs\UWPNuGetPackages\microsoft.net.native.compiler\2.2.7-rel-27913-00\tools\LibraryXML"
+/RunOnlyPreDR

@@ -21,7 +21,7 @@
 
         <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
             <TextBlock Name="txbTimer" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10"
-                   Text="TIMER" FontSize="76" FontFamily="Gadugi" Foreground="DarkCyan" />
+                   Text="Starting..." FontSize="76" FontFamily="Gadugi" Foreground="DarkCyan" />
 
             <TextBlock Name="txbChecks" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10"
                    Text="CHECKS" FontSize="60" FontFamily="OCR A Extended" Foreground="DarkCyan" />
@@ -34,10 +34,27 @@
         </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10"
+            <StackPanel Orientation="Horizontal">
+                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10"
                    Text="Sensor" FontSize="60" FontFamily="OCR A Extended" Foreground="DarkGoldenrod" />
-            <TextBlock Name="txbSensorStatus" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10"
+                <TextBlock Name="txbSensorStatus" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10"
                    Text="OFFLINE" FontSize="60" FontFamily="OCR A Extended" Foreground="DarkCyan" />
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal">
+                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10"
+                   Text="SQL" FontSize="60" FontFamily="OCR A Extended" Foreground="DarkGoldenrod" />
+                <TextBlock Name="txbSqlStatus" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10"
+                   Text="OFFLINE" FontSize="60" FontFamily="OCR A Extended" Foreground="DarkCyan" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10"
+                   Text="Last SQL" FontSize="60" FontFamily="OCR A Extended" Foreground="DarkGoldenrod" />
+                <TextBlock Name="txbLastSql" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10"
+                   Text="NO UPDATES" FontSize="60" FontFamily="OCR A Extended" Foreground="DarkCyan" />
+            </StackPanel>
+
         </StackPanel>
 
     </Grid>

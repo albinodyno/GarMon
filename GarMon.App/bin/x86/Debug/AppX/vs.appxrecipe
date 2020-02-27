@@ -30,13 +30,13 @@
     <AppXManifest Include="C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\bin\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2020-02-27T16:23:40.166</Modified>
+      <Modified>2020-02-27T23:35:05.759</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\bin\x86\Debug\GarMon.App.exe">
       <PackagePath>entrypoint\GarMon.App.exe</PackagePath>
-      <Modified>2020-02-27T16:23:39.384</Modified>
+      <Modified>2020-02-27T23:35:04.934</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\bin\x86\Debug\GarMon.App.exe.config">
       <PackagePath>GarMon.App.exe.config</PackagePath>
@@ -102,15 +102,15 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\bin\x86\Debug\GarMon.App.xr.xml">
       <PackagePath>GarMon.App.xr.xml</PackagePath>
-      <Modified>2020-02-25T16:47:42.538</Modified>
+      <Modified>2020-02-27T23:35:04.649</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\bin\x86\Debug\App.xbf">
       <PackagePath>App.xbf</PackagePath>
-      <Modified>2020-02-27T16:23:39.191</Modified>
+      <Modified>2020-02-27T23:35:04.667</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\bin\x86\Debug\MainPage.xbf">
       <PackagePath>MainPage.xbf</PackagePath>
-      <Modified>2020-02-27T16:23:39.191</Modified>
+      <Modified>2020-02-27T23:35:04.667</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\UnionMetadata\10.0.17763.0\Windows.winmd">
       <PackagePath>WinMetadata\Windows.winmd</PackagePath>
@@ -118,11 +118,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\bin\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2020-02-27T16:14:12.277</Modified>
+      <Modified>2020-02-27T22:33:31.804</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\bin\x86\Debug\Core\GarMon.App.exe">
       <PackagePath>GarMon.App.exe</PackagePath>
-      <Modified>2020-02-27T16:23:40.145</Modified>
+      <Modified>2020-02-27T23:35:05.740</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

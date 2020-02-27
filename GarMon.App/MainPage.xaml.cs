@@ -20,6 +20,7 @@ using MailKit.Net.Smtp;
 using Windows.UI;
 using Windows.Devices.Gpio;
 using Windows.UI.Core;
+using System.Data.SqlClient;
 
 namespace GarMon.App
 {
@@ -31,12 +32,15 @@ namespace GarMon.App
         int ticks = 0;
         int checks = 0;
 
+        bool sqlOffline;
         bool sensorOffline;
         bool open = false;
         bool sent = false;
 
         GpioController gpio;
         GpioPin reedPin;
+
+        string sqlConn;
 
         DispatcherTimer timer = new DispatcherTimer();
 
@@ -49,6 +53,7 @@ namespace GarMon.App
             timer.Start();
 
             SetupGPIOPins();
+            SetupSqlConn();
             UpdateBoard();
         }
 
@@ -67,6 +72,9 @@ namespace GarMon.App
 
                 if (sensorOffline)
                     SetupGPIOPins();
+
+                if (sqlOffline)
+                    SetupSqlConn();
             }
         }
 
@@ -98,6 +106,12 @@ namespace GarMon.App
                 //reedPin.ValueChanged += PinChange;
                 sensorOffline = false;
             }
+        }
+
+        private void SetupSqlConn()
+        {
+            sqlConn = @"Data Source=YourServerName\SQLEXPRESS;Initial Catalog=NORTHWIND;Integrated Security=SSPI";
+            //somehow test connection?
         }
 
         private void PinChange(object sender, object e)
@@ -137,8 +151,9 @@ namespace GarMon.App
         private void HandleOpen()
         {
             checks++;
+            UpdateSQL();
 
-            if (checks > 1 && !sent)
+            if (checks > checksToEmail && !sent)
             {
                 SendEmail();
                 sent = true;
@@ -147,8 +162,10 @@ namespace GarMon.App
 
         private void UpdateBoard()
         {
+            //Update Checks
             txbChecks.Text = "Checks : " + checks.ToString();
 
+            //Update Door Status
             if (!open)
             {
                 txbStatus.Text = "Status : Closed";
@@ -160,6 +177,7 @@ namespace GarMon.App
                 txbStatus.Foreground = new SolidColorBrush(Colors.OrangeRed);
             }
 
+            //Update Email Status
             if (!open && !sent)
                 txbEStatus.Text = "";
             else if (open && !sent)
@@ -167,16 +185,42 @@ namespace GarMon.App
             else
                 txbEStatus.Text = "Email :::SENT:::";
 
+            //Update Pin Status
             if (reedPin == null)
                 txbSensorStatus.Text = "Offline";
             else
                 txbSensorStatus.Text = "Online";
 
+            //Update SQL Status
+            if(!sqlOffline)
+            {
+                txbSqlStatus.Text = "Online";
+            }
+            else
+            {
+                txbSqlStatus.Text = "Offline";
+            }
+
         }
 
         private void UpdateSQL()
         {
+            if (!sqlOffline)
+            {
+                SqlConnection connection = new SqlConnection(sqlConn);
+                SqlCommand cmd = new SqlCommand("sp_insert", connection);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Date", DateTime.Now.ToString());
 
+                connection.Open();
+                int i = cmd.ExecuteNonQuery();
+                connection.Close();
+
+                if (i != 0)
+                    txbLastSql.Text = "Successful " + DateTime.Now.ToString();
+                else
+                    txbLastSql.Text = "Unsuccessful " + DateTime.Now.ToString();
+            }
         }
 
         private void SendEmail()
