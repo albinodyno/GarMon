@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Machine>PF-L9DDQGPM</Machine>
-    <WindowsUser>jared.b</WindowsUser>
+    <Machine>DESKTOP-7S00483</Machine>
+    <WindowsUser>WAMPA</WindowsUser>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetOsVersion>10.0</TargetOsVersion>
     <TargetOsDescription>Windows 10.0</TargetOsDescription>
@@ -10,16 +10,16 @@
     <PackageArchitecture>x86</PackageArchitecture>
     <PackageIdentityName>593f396e-e9ad-4883-945e-bda88147742d</PackageIdentityName>
     <PackageIdentityPublisher>CN=jared.b</PackageIdentityPublisher>
-    <IntermediateOutputPath>C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\obj\x86\Debug\</IntermediateOutputPath>
+    <IntermediateOutputPath>E:\Visual Studio Projects\GarMon\GarMon.App\obj\x86\Debug\</IntermediateOutputPath>
     <RemoteDeploymentType>
     </RemoteDeploymentType>
     <PackageRegistrationPath>
     </PackageRegistrationPath>
     <RemoveNonLayoutFiles>true</RemoveNonLayoutFiles>
     <DeployOptionalPackages>false</DeployOptionalPackages>
-    <WindowsSdkPath>C:\Program Files %28x86%29\Windows Kits\10\</WindowsSdkPath>
-    <LayoutDir>C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\bin\x86\Debug\AppX</LayoutDir>
-    <RegisteredManifestChecksum>94EF8A0A7281A8BDF1C98BBEA18DA0B6CC99BD7D8F7022D573E8284F8902335C</RegisteredManifestChecksum>
+    <WindowsSdkPath>E:\Windows Kits\10\</WindowsSdkPath>
+    <LayoutDir>E:\Visual Studio Projects\GarMon\GarMon.App\bin\x86\Debug\AppX</LayoutDir>
+    <RegisteredManifestChecksum>F28F367C7E825E6DED5F3C2AC4663AD9B0FC19210CBCD58E7F45537318D70C4E</RegisteredManifestChecksum>
     <RegisteredPackageMoniker>593f396e-e9ad-4883-945e-bda88147742d_1.0.0.0_x86__416he3sd415m2</RegisteredPackageMoniker>
     <RegisteredUserModeAppID>593f396e-e9ad-4883-945e-bda88147742d_416he3sd415m2!App</RegisteredUserModeAppID>
     <RegisteredPackageID>593f396e-e9ad-4883-945e-bda88147742d</RegisteredPackageID>
@@ -27,30 +27,30 @@
     <RegisteredVersion>1.0.0.0</RegisteredVersion>
   </PropertyGroup>
   <ItemGroup>
-    <AppXManifest Include="C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\bin\x86\Debug\Core\AppxManifest.xml">
+    <AppXManifest Include="E:\Visual Studio Projects\GarMon\GarMon.App\bin\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2020-02-27T23:35:05.759</Modified>
+      <Modified>2020-02-28T03:12:45.156</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
-    <AppxPackagedFile Include="C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\bin\x86\Debug\GarMon.App.exe">
+    <AppxPackagedFile Include="E:\Visual Studio Projects\GarMon\GarMon.App\bin\x86\Debug\GarMon.App.exe">
       <PackagePath>entrypoint\GarMon.App.exe</PackagePath>
-      <Modified>2020-02-27T23:35:04.934</Modified>
+      <Modified>2020-02-28T03:12:44.615</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\bin\x86\Debug\GarMon.App.exe.config">
+    <AppxPackagedFile Include="E:\Visual Studio Projects\GarMon\GarMon.App\bin\x86\Debug\GarMon.App.exe.config">
       <PackagePath>GarMon.App.exe.config</PackagePath>
-      <Modified>2020-02-26T17:48:13.996</Modified>
+      <Modified>2020-02-28T02:27:51.951</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\jared.b.PF\.nuget\packages\mailkit\2.5.1\lib\netstandard2.0\MailKit.dll">
+    <AppxPackagedFile Include="C:\Users\WAMPA\.nuget\packages\mailkit\2.5.1\lib\netstandard2.0\MailKit.dll">
       <PackagePath>MailKit.dll</PackagePath>
       <Modified>2020-02-16T00:26:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\jared.b.PF\.nuget\packages\mimekit\2.5.1\lib\netstandard2.0\MimeKit.dll">
+    <AppxPackagedFile Include="C:\Users\WAMPA\.nuget\packages\mimekit\2.5.1\lib\netstandard2.0\MimeKit.dll">
       <PackagePath>MimeKit.dll</PackagePath>
       <Modified>2020-02-16T00:18:46.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\jared.b.PF\.nuget\packages\portable.bouncycastle\1.8.5\lib\netstandard2.0\BouncyCastle.Crypto.dll">
+    <AppxPackagedFile Include="C:\Users\WAMPA\.nuget\packages\portable.bouncycastle\1.8.5\lib\netstandard2.0\BouncyCastle.Crypto.dll">
       <PackagePath>BouncyCastle.Crypto.dll</PackagePath>
       <Modified>2019-02-08T08:50:10.000</Modified>
     </AppxPackagedFile>
@@ -58,71 +58,71 @@
       <PackagePath>System.Runtime.dll</PackagePath>
       <Modified>2019-07-22T21:01:14.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\bin\10.0.17763.0\XamlCompiler\Microsoft.UI.Xaml.Markup.winmd">
+    <AppxPackagedFile Include="E:\Windows Kits\10\bin\10.0.17763.0\XamlCompiler\Microsoft.UI.Xaml.Markup.winmd">
       <PackagePath>Microsoft.UI.Xaml.Markup.winmd</PackagePath>
       <Modified>2018-10-23T08:33:40.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\Properties\Default.rd.xml">
+    <AppxPackagedFile Include="E:\Visual Studio Projects\GarMon\GarMon.App\Properties\Default.rd.xml">
       <PackagePath>Properties\Default.rd.xml</PackagePath>
-      <Modified>2020-02-24T16:30:45.108</Modified>
+      <Modified>2020-02-26T04:18:23.963</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\Assets\LockScreenLogo.scale-200.png">
+    <AppxPackagedFile Include="E:\Visual Studio Projects\GarMon\GarMon.App\Assets\LockScreenLogo.scale-200.png">
       <PackagePath>Assets\LockScreenLogo.scale-200.png</PackagePath>
-      <Modified>2019-12-19T14:48:40.386</Modified>
+      <Modified>2020-02-26T04:18:23.963</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\Assets\SplashScreen.scale-200.png">
+    <AppxPackagedFile Include="E:\Visual Studio Projects\GarMon\GarMon.App\Assets\SplashScreen.scale-200.png">
       <PackagePath>Assets\SplashScreen.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2019-12-19T14:48:40.386</Modified>
+      <Modified>2020-02-26T04:18:23.963</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\Assets\Square150x150Logo.scale-200.png">
+    <AppxPackagedFile Include="E:\Visual Studio Projects\GarMon\GarMon.App\Assets\Square150x150Logo.scale-200.png">
       <PackagePath>Assets\Square150x150Logo.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2019-12-19T14:48:40.386</Modified>
+      <Modified>2020-02-26T04:18:23.963</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\Assets\Square44x44Logo.scale-200.png">
+    <AppxPackagedFile Include="E:\Visual Studio Projects\GarMon\GarMon.App\Assets\Square44x44Logo.scale-200.png">
       <PackagePath>Assets\Square44x44Logo.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2019-12-19T14:48:40.386</Modified>
+      <Modified>2020-02-26T04:18:23.963</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
+    <AppxPackagedFile Include="E:\Visual Studio Projects\GarMon\GarMon.App\Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
       <PackagePath>Assets\Square44x44Logo.targetsize-24_altform-unplated.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2019-12-19T14:48:40.386</Modified>
+      <Modified>2020-02-26T04:18:23.963</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\Assets\StoreLogo.png">
+    <AppxPackagedFile Include="E:\Visual Studio Projects\GarMon\GarMon.App\Assets\StoreLogo.png">
       <PackagePath>Assets\StoreLogo.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2019-12-19T14:48:40.386</Modified>
+      <Modified>2020-02-26T04:18:23.963</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\Assets\Wide310x150Logo.scale-200.png">
+    <AppxPackagedFile Include="E:\Visual Studio Projects\GarMon\GarMon.App\Assets\Wide310x150Logo.scale-200.png">
       <PackagePath>Assets\Wide310x150Logo.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2019-12-19T14:48:40.386</Modified>
+      <Modified>2020-02-26T04:18:23.963</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\bin\x86\Debug\GarMon.App.xr.xml">
+    <AppxPackagedFile Include="E:\Visual Studio Projects\GarMon\GarMon.App\bin\x86\Debug\GarMon.App.xr.xml">
       <PackagePath>GarMon.App.xr.xml</PackagePath>
-      <Modified>2020-02-27T23:35:04.649</Modified>
+      <Modified>2020-02-28T02:27:53.694</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\bin\x86\Debug\App.xbf">
+    <AppxPackagedFile Include="E:\Visual Studio Projects\GarMon\GarMon.App\bin\x86\Debug\App.xbf">
       <PackagePath>App.xbf</PackagePath>
-      <Modified>2020-02-27T23:35:04.667</Modified>
+      <Modified>2020-02-28T03:12:44.414</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\bin\x86\Debug\MainPage.xbf">
+    <AppxPackagedFile Include="E:\Visual Studio Projects\GarMon\GarMon.App\bin\x86\Debug\MainPage.xbf">
       <PackagePath>MainPage.xbf</PackagePath>
-      <Modified>2020-02-27T23:35:04.667</Modified>
+      <Modified>2020-02-28T03:12:44.414</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\UnionMetadata\10.0.17763.0\Windows.winmd">
+    <AppxPackagedFile Include="E:\Windows Kits\10\UnionMetadata\10.0.17763.0\Windows.winmd">
       <PackagePath>WinMetadata\Windows.winmd</PackagePath>
       <Modified>2018-10-23T07:44:28.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\bin\x86\Debug\resources.pri">
+    <AppxPackagedFile Include="E:\Visual Studio Projects\GarMon\GarMon.App\bin\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2020-02-27T22:33:31.804</Modified>
+      <Modified>2020-02-28T02:38:11.447</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\bin\x86\Debug\Core\GarMon.App.exe">
+    <AppxPackagedFile Include="E:\Visual Studio Projects\GarMon\GarMon.App\bin\x86\Debug\Core\GarMon.App.exe">
       <PackagePath>GarMon.App.exe</PackagePath>
-      <Modified>2020-02-27T23:35:05.740</Modified>
+      <Modified>2020-02-28T03:12:45.150</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

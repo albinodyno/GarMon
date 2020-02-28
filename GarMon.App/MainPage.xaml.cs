@@ -33,7 +33,7 @@ namespace GarMon.App
         int checks = 0;
 
         bool sqlOffline;
-        bool sensorOffline;
+        bool sensorOffline = true;
         bool open = false;
         bool sent = false;
 
@@ -54,6 +54,7 @@ namespace GarMon.App
 
             SetupGPIOPins();
             SetupSqlConn();
+            CheckDoor();
             UpdateBoard();
         }
 
@@ -66,15 +67,13 @@ namespace GarMon.App
             if (ticks >= tickInterval)
             {
                 ticks = 0;
-                CheckDoor();
-                UpdateBoard();
-                UpdateSQL();
 
                 if (sensorOffline)
                     SetupGPIOPins();
 
-                if (sqlOffline)
-                    SetupSqlConn();
+                CheckDoor();
+                UpdateSQL();
+                UpdateBoard();
             }
         }
 
@@ -85,9 +84,8 @@ namespace GarMon.App
             if (gpio == null)
             {
                 sensorOffline = true;
-                return; // GPIO not available on this system
+                return;
             }
-
 
             using (reedPin = gpio.OpenPin(5))
             {
@@ -108,18 +106,32 @@ namespace GarMon.App
             }
         }
 
-        private void SetupSqlConn()
-        {
-            sqlConn = @"Data Source=YourServerName\SQLEXPRESS;Initial Catalog=NORTHWIND;Integrated Security=SSPI";
-            //somehow test connection?
-        }
-
         private void PinChange(object sender, object e)
         {
             if (reedPin.Read() == GpioPinValue.High)
             {
                 open = true;
             }
+        }
+
+        private void SetupSqlConn()
+        {
+            sqlConn = @"Server=tcp:WAMPA,49172\SQLEXPRESS;Database=GarMonDB;Trusted_Connection=True;User Id=albinodyno;Password=thelivingshitouttame";
+            //DESKTOP-7S00483
+            //somehow test connection?
+            //cmd: select @@Version
+            //go
+
+            SqlConnection connection = new SqlConnection(sqlConn);
+            SqlCommand cmd = new SqlCommand("TestSetup", connection);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Date", DateTime.Now.ToString());
+
+            connection.Open();
+            int i = cmd.ExecuteNonQuery();
+            connection.Close();
+
+            sqlOffline = true;
         }
 
         private void CheckDoor()
@@ -166,14 +178,19 @@ namespace GarMon.App
             txbChecks.Text = "Checks : " + checks.ToString();
 
             //Update Door Status
-            if (!open)
+            if (!sensorOffline && !open)
             {
                 txbStatus.Text = "Status : Closed";
                 txbStatus.Foreground = new SolidColorBrush(Colors.DarkCyan);
             }
+            else if(!sensorOffline && open)
+            {
+                txbStatus.Text = "Status ::OPEN::";
+                txbStatus.Foreground = new SolidColorBrush(Colors.OrangeRed);
+            }
             else
             {
-                txbStatus.Text = "Status :::OPEN:::";
+                txbStatus.Text = "::Unknown::";
                 txbStatus.Foreground = new SolidColorBrush(Colors.OrangeRed);
             }
 
@@ -181,24 +198,39 @@ namespace GarMon.App
             if (!open && !sent)
                 txbEStatus.Text = "";
             else if (open && !sent)
+            {
                 txbEStatus.Text = $"Not Sent: {checksToEmail - checks} left";
+                txbEStatus.Foreground = new SolidColorBrush(Colors.DarkCyan);
+            }
             else
-                txbEStatus.Text = "Email :::SENT:::";
+            {
+                txbEStatus.Text = "Email ::SENT::";
+                txbEStatus.Foreground = new SolidColorBrush(Colors.OrangeRed);
+            }
 
             //Update Pin Status
             if (reedPin == null)
+            {
                 txbSensorStatus.Text = "Offline";
+                txbSensorStatus.Foreground = new SolidColorBrush(Colors.OrangeRed);
+            }
             else
+            {
                 txbSensorStatus.Text = "Online";
+                txbSensorStatus.Foreground = new SolidColorBrush(Colors.DarkCyan);
+            }
+                
 
             //Update SQL Status
             if(!sqlOffline)
             {
                 txbSqlStatus.Text = "Online";
+                txbSqlStatus.Foreground = new SolidColorBrush(Colors.DarkCyan);
             }
             else
             {
                 txbSqlStatus.Text = "Offline";
+                txbSqlStatus.Foreground = new SolidColorBrush(Colors.OrangeRed);
             }
 
         }
@@ -221,6 +253,8 @@ namespace GarMon.App
                 else
                     txbLastSql.Text = "Unsuccessful " + DateTime.Now.ToString();
             }
+            else
+                SetupSqlConn();
         }
 
         private void SendEmail()
