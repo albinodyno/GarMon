@@ -116,22 +116,26 @@ namespace GarMon.App
 
         private void SetupSqlConn()
         {
-            sqlConn = @"Server=tcp:WAMPA,49172\SQLEXPRESS;Database=GarMonDB;Trusted_Connection=True;User Id=albinodyno;Password=thelivingshitouttame";
-            //DESKTOP-7S00483
-            //somehow test connection?
-            //cmd: select @@Version
-            //go
+            try
+            {
+                sqlConn = @"Server=tcp:WAMPA,49172\SQLEXPRESS;Database=GarMonDB;Trusted_Connection=True;User Id=albinodyno;Password=thelivingshitouttame";
 
-            SqlConnection connection = new SqlConnection(sqlConn);
-            SqlCommand cmd = new SqlCommand("TestSetup", connection);
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@Date", DateTime.Now.ToString());
+                SqlConnection connection = new SqlConnection(sqlConn);
+                SqlCommand cmd = new SqlCommand("TestSetup", connection);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Date", DateTime.Now.ToString());
 
-            connection.Open();
-            int i = cmd.ExecuteNonQuery();
-            connection.Close();
+                connection.Open();
+                int i = cmd.ExecuteNonQuery();
+                connection.Close();
 
-            sqlOffline = true;
+                sqlOffline = false;
+            }
+            catch (Exception ex)
+            {
+                sqlOffline = true;
+            }
+
         }
 
         private void CheckDoor()
@@ -224,7 +228,7 @@ namespace GarMon.App
             //Update SQL Status
             if(!sqlOffline)
             {
-                txbSqlStatus.Text = "Online";
+                txbSqlStatus.Text = "Online" + DateTime.Now.ToString();
                 txbSqlStatus.Foreground = new SolidColorBrush(Colors.DarkCyan);
             }
             else
@@ -240,7 +244,7 @@ namespace GarMon.App
             if (!sqlOffline)
             {
                 SqlConnection connection = new SqlConnection(sqlConn);
-                SqlCommand cmd = new SqlCommand("sp_insert", connection);
+                SqlCommand cmd = new SqlCommand("CheckInsert", connection);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Date", DateTime.Now.ToString());
 
