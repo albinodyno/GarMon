@@ -15977,29 +15977,26 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\jared.b.PF\\.nuget\\packages\\": {},
-    "C:\\Microsoft\\Xamarin\\NuGet\\": {},
+    "C:\\Users\\WAMPA\\.nuget\\packages\\": {},
+    "E:\\Microsoft\\Xamarin\\NuGet\\": {},
     "C:\\Program Files (x86)\\Microsoft SDKs\\UWPNuGetPackages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jared.b.PF\\source\\AlbinoDyno\\GarMon\\GarMon.App\\GarMon.App.csproj",
+      "projectUniqueName": "E:\\Visual Studio Projects\\GarMon\\GarMon.App\\GarMon.App.csproj",
       "projectName": "GarMon.App",
-      "projectPath": "C:\\Users\\jared.b.PF\\source\\AlbinoDyno\\GarMon\\GarMon.App\\GarMon.App.csproj",
-      "packagesPath": "C:\\Users\\jared.b.PF\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jared.b.PF\\source\\AlbinoDyno\\GarMon\\GarMon.App\\obj\\",
+      "projectPath": "E:\\Visual Studio Projects\\GarMon\\GarMon.App\\GarMon.App.csproj",
+      "packagesPath": "C:\\Users\\WAMPA\\.nuget\\packages\\",
+      "outputPath": "E:\\Visual Studio Projects\\GarMon\\GarMon.App\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
-        "C:\\Microsoft\\Xamarin\\NuGet\\",
+        "E:\\Microsoft\\Xamarin\\NuGet\\",
         "C:\\Program Files (x86)\\Microsoft SDKs\\UWPNuGetPackages\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\jared.b.PF\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress .NET Core Desktop 19.2.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 18.2.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 19.2.config",
+        "C:\\Users\\WAMPA\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
@@ -16007,12 +16004,7 @@
         "uap10.0.16299"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\DevExpress 18.2\\Components\\System\\Components\\Packages": {},
-        "C:\\Program Files (x86)\\DevExpress 18.2\\DevExtreme\\System\\DevExtreme\\Bin\\AspNetCore": {},
-        "C:\\Program Files (x86)\\DevExpress 19.2\\.NET Core Desktop Libraries\\System\\Components\\Packages": {},
-        "C:\\Program Files (x86)\\DevExpress 19.2\\Components\\System\\Components\\Packages": {},
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "http://supporttools.phxform.com:9000/nuget": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

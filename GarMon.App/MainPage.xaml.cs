@@ -37,8 +37,10 @@ namespace GarMon.App
         bool open = false;
         bool sent = false;
 
+        private const int reedPinNum = 5;
         GpioController gpio;
         GpioPin reedPin;
+        GpioPinValue gpioValue;
 
         string sqlConn;
 
@@ -79,30 +81,35 @@ namespace GarMon.App
 
         private void SetupGPIOPins()
         {
-            gpio = GpioController.GetDefault();
+            #region
+            // Latch HIGH value first. This ensures a default value when the pin is set as output
+            //reedPin.Write(GpioPinValue.High);
 
-            if (gpio == null)
+            // Set the IO direction as input
+
+
+            //probably a better way to run this program instead of running a timer non-stop:
+            //event triggers when pin value changed
+            //start timer, after so long send email
+            //stop timer when pin changed again, send email saying its closed 
+            //(uncomment below)
+
+            //reedPin.ValueChanged += PinChange;
+            #endregion
+
+            try
             {
-                sensorOffline = true;
-                return;
-            }
+                gpio = GpioController.GetDefault();
 
-            using (reedPin = gpio.OpenPin(5))
-            {
-                // Latch HIGH value first. This ensures a default value when the pin is set as output
-                //reedPin.Write(GpioPinValue.High);
-
-                // Set the IO direction as input
+                reedPin = gpio.OpenPin(reedPinNum);
                 reedPin.SetDriveMode(GpioPinDriveMode.Input);
 
-                //probably a better way to run this program instead of running a timer non-stop:
-                //event triggers when pin value changed
-                //start timer, after so long send email
-                //stop timer when pin changed again, send email saying its closed 
-                //(uncomment below)
-
-                //reedPin.ValueChanged += PinChange;
+                gpioValue = reedPin.Read();
                 sensorOffline = false;
+            }
+            catch (Exception ex)
+            {
+                sensorOffline = true;
             }
         }
 
@@ -125,7 +132,7 @@ namespace GarMon.App
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Date", DateTime.Now.ToString());
 
-                connection.Open();
+                //connection.Open();
                 int i = cmd.ExecuteNonQuery();
                 connection.Close();
 
@@ -140,6 +147,10 @@ namespace GarMon.App
 
         private void CheckDoor()
         {
+            if (sensorOffline)
+                return;
+
+            #region
             //Check if sensor senses door
             //https://tutorials-raspberrypi.com/raspberry-pi-ultrasonic-sensor-hc-sr04/
             //https://github.com/microsoft/Windows-universal-samples/blob/master/Samples/ProximitySensor/cs/Scenario1_DataEvents.xaml.cs
@@ -150,8 +161,11 @@ namespace GarMon.App
             //Introducing a magnetic field from the second block switches continuity from "COM" to "NO". 
             //Note that there are small triangle symbols on the switch to indicate the internal magnet location in the block. 
             //These triangles should be less than 5mm apart to activate the switch
+            #endregion
 
-            if (reedPin != null && reedPin.Read() == GpioPinValue.High)
+            gpioValue = reedPin.Read();
+
+            if (reedPin != null && gpioValue == GpioPinValue.High)
             {
                 open = true;
                 HandleOpen();
@@ -194,7 +208,7 @@ namespace GarMon.App
             }
             else
             {
-                txbStatus.Text = "::Unknown::";
+                txbStatus.Text = "Status ::Unknown::";
                 txbStatus.Foreground = new SolidColorBrush(Colors.OrangeRed);
             }
 
@@ -213,7 +227,7 @@ namespace GarMon.App
             }
 
             //Update Pin Status
-            if (reedPin == null)
+            if (sensorOffline)
             {
                 txbSensorStatus.Text = "Offline";
                 txbSensorStatus.Foreground = new SolidColorBrush(Colors.OrangeRed);

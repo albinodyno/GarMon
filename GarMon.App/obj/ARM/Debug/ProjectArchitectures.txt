@@ -1,0 +1,1 @@
+E:\Visual Studio Projects\GarMon\GarMon.App\GarMon.App.csproj;arm
