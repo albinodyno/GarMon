@@ -30,13 +30,13 @@
     <AppXManifest Include="E:\Visual Studio Projects\GarMon\GarMon.App\bin\ARM\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2020-03-05T05:19:06.144</Modified>
+      <Modified>2020-03-05T05:49:39.043</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="E:\Visual Studio Projects\GarMon\GarMon.App\bin\ARM\Debug\GarMon.App.exe">
       <PackagePath>entrypoint\GarMon.App.exe</PackagePath>
-      <Modified>2020-03-05T05:19:03.629</Modified>
+      <Modified>2020-03-05T05:49:37.033</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="E:\Visual Studio Projects\GarMon\GarMon.App\bin\ARM\Debug\GarMon.App.exe.config">
       <PackagePath>GarMon.App.exe.config</PackagePath>
@@ -122,7 +122,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="E:\Visual Studio Projects\GarMon\GarMon.App\bin\ARM\Debug\Core\GarMon.App.exe">
       <PackagePath>GarMon.App.exe</PackagePath>
-      <Modified>2020-03-05T05:19:06.110</Modified>
+      <Modified>2020-03-05T05:49:39.018</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

@@ -38,9 +38,13 @@ namespace GarMon.App
         bool sent = false;
 
         private const int reedPinNum = 5;
+        //private const int signalPinNum = 
         GpioController gpio;
         GpioPin reedPin;
-        GpioPinValue gpioValue;
+        GpioPin signalPin;
+        GpioPinValue reedValue;
+        GpioPinValue signalValue;
+
 
         string sqlConn;
 
@@ -104,7 +108,7 @@ namespace GarMon.App
                 reedPin = gpio.OpenPin(reedPinNum);
                 reedPin.SetDriveMode(GpioPinDriveMode.Input);
 
-                gpioValue = reedPin.Read();
+                reedValue = reedPin.Read();
                 sensorOffline = false;
             }
             catch (Exception ex)
@@ -150,6 +154,27 @@ namespace GarMon.App
             if (sensorOffline)
                 return;
 
+            try
+            {
+                reedValue = reedPin.Read();
+
+                if (reedValue == GpioPinValue.High)
+                {
+                    open = true;
+                    HandleOpen();
+                }
+                else
+                {
+                    open = false;
+                    checks = 0;
+                    sent = false;
+                }
+            }
+            catch(Exception ex)
+            {
+                sensorOffline = true;
+            }
+
             #region
             //Check if sensor senses door
             //https://tutorials-raspberrypi.com/raspberry-pi-ultrasonic-sensor-hc-sr04/
@@ -162,20 +187,6 @@ namespace GarMon.App
             //Note that there are small triangle symbols on the switch to indicate the internal magnet location in the block. 
             //These triangles should be less than 5mm apart to activate the switch
             #endregion
-
-            gpioValue = reedPin.Read();
-
-            if (reedPin != null && gpioValue == GpioPinValue.High)
-            {
-                open = true;
-                HandleOpen();
-            }
-            else
-            {
-                open = false;
-                checks = 0;
-                sent = false;
-            }
         }
 
         private void HandleOpen()
