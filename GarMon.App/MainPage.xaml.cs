@@ -32,19 +32,15 @@ namespace GarMon.App
         int ticks = 0;
         int checks = 0;
 
-        bool sqlOffline;
+        bool sqlOffline = true;
         bool sensorOffline = true;
         bool open = false;
         bool sent = false;
 
         private const int reedPinNum = 5;
-        //private const int signalPinNum = 
         GpioController gpio;
         GpioPin reedPin;
-        GpioPin signalPin;
         GpioPinValue reedValue;
-        GpioPinValue signalValue;
-
 
         string sqlConn;
 
@@ -56,12 +52,13 @@ namespace GarMon.App
 
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += TimerTick;
-            timer.Start();
 
             SetupGPIOPins();
             SetupSqlConn();
             CheckDoor();
             UpdateBoard();
+
+            timer.Start();
         }
 
         private void TimerTick(object sender, object e)
@@ -242,6 +239,9 @@ namespace GarMon.App
             {
                 txbSensorStatus.Text = "Offline";
                 txbSensorStatus.Foreground = new SolidColorBrush(Colors.OrangeRed);
+                checks = 0;
+                sent = false;
+                open = false;
             }
             else
             {
