@@ -111,6 +111,9 @@ namespace GarMon.App
             catch (Exception ex)
             {
                 sensorOffline = true;
+                checks = 0;
+                sent = false;
+                open = false;
             }
         }
 
@@ -169,9 +172,8 @@ namespace GarMon.App
             }
             catch(Exception ex)
             {
-                sensorOffline = true;
+                return;
             }
-
             #region
             //Check if sensor senses door
             //https://tutorials-raspberrypi.com/raspberry-pi-ultrasonic-sensor-hc-sr04/
@@ -228,10 +230,14 @@ namespace GarMon.App
                 txbEStatus.Text = $"Not Sent: {checksToEmail - checks} left";
                 txbEStatus.Foreground = new SolidColorBrush(Colors.DarkCyan);
             }
-            else
+            else if (open && sent)
             {
                 txbEStatus.Text = "Email ::SENT::";
                 txbEStatus.Foreground = new SolidColorBrush(Colors.OrangeRed);
+            }
+            else if(!open && sent)
+            {
+                txbEStatus.Text = "";
             }
 
             //Update Pin Status
@@ -239,27 +245,23 @@ namespace GarMon.App
             {
                 txbSensorStatus.Text = "Offline";
                 txbSensorStatus.Foreground = new SolidColorBrush(Colors.OrangeRed);
-                checks = 0;
-                sent = false;
-                open = false;
             }
             else
             {
                 txbSensorStatus.Text = "Online";
                 txbSensorStatus.Foreground = new SolidColorBrush(Colors.DarkCyan);
             }
-                
 
             //Update SQL Status
-            if(!sqlOffline)
-            {
-                txbSqlStatus.Text = "Online" + DateTime.Now.ToString();
-                txbSqlStatus.Foreground = new SolidColorBrush(Colors.DarkCyan);
-            }
-            else
+            if (sqlOffline)
             {
                 txbSqlStatus.Text = "Offline";
                 txbSqlStatus.Foreground = new SolidColorBrush(Colors.OrangeRed);
+            }
+            else
+            {
+                txbSqlStatus.Text = "Online" + DateTime.Now.ToString();
+                txbSqlStatus.Foreground = new SolidColorBrush(Colors.DarkCyan);
             }
 
         }
