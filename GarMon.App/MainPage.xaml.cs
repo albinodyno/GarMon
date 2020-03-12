@@ -95,7 +95,7 @@ namespace GarMon.App
             //stop timer when pin changed again, send email saying its closed 
             //(uncomment below)
 
-            //reedPin.ValueChanged += PinChange;
+
             #endregion
 
             try
@@ -106,6 +106,7 @@ namespace GarMon.App
                 reedPin.SetDriveMode(GpioPinDriveMode.Input);
 
                 reedValue = reedPin.Read();
+                reedPin.ValueChanged += PinChange;
                 sensorOffline = false;
             }
             catch (Exception ex)
@@ -122,6 +123,10 @@ namespace GarMon.App
             if (reedPin.Read() == GpioPinValue.High)
             {
                 open = true;
+            }
+            else if (reedPin.Read() == GpioPinValue.Low)
+            {
+                open = false;
             }
         }
 
@@ -156,13 +161,8 @@ namespace GarMon.App
 
             try
             {
-                reedValue = reedPin.Read();
-
-                if (reedValue == GpioPinValue.High)
-                {
-                    open = true;
+                if (open)
                     HandleOpen();
-                }
                 else
                 {
                     open = false;
@@ -170,7 +170,7 @@ namespace GarMon.App
                     sent = false;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return;
             }
@@ -185,6 +185,20 @@ namespace GarMon.App
             //Introducing a magnetic field from the second block switches continuity from "COM" to "NO". 
             //Note that there are small triangle symbols on the switch to indicate the internal magnet location in the block. 
             //These triangles should be less than 5mm apart to activate the switch
+
+            //reedValue = reedPin.Read();
+
+            //if (reedValue == GpioPinValue.High)
+            //{
+            //    open = true;
+            //    HandleOpen();
+            //}
+            //else
+            //{
+            //    open = false;
+            //    checks = 0;
+            //    sent = false;
+            //}
             #endregion
         }
 
