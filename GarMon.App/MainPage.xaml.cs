@@ -137,7 +137,7 @@ namespace GarMon.App
                 sqlConn = @"Server=tcp:WAMPA,49172\SQLEXPRESS;Database=GarMonDB;Trusted_Connection=True;User Id=albinodyno;Password=thelivingshitouttame";
 
                 SqlConnection connection = new SqlConnection(sqlConn);
-                SqlCommand cmd = new SqlCommand("TestSetup", connection);
+                SqlCommand cmd = new SqlCommand("GMTestSetup", connection);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Date", DateTime.Now.ToString());
 
@@ -151,7 +151,6 @@ namespace GarMon.App
             {
                 sqlOffline = true;
             }
-
         }
 
         private void CheckDoor()
@@ -227,12 +226,12 @@ namespace GarMon.App
             }
             else if(!sensorOffline && open)
             {
-                txbStatus.Text = "Status ::OPEN::";
+                txbStatus.Text = "Status : OPEN";
                 txbStatus.Foreground = new SolidColorBrush(Colors.OrangeRed);
             }
             else
             {
-                txbStatus.Text = "Status ::Unknown::";
+                txbStatus.Text = "Status : Unknown";
                 txbStatus.Foreground = new SolidColorBrush(Colors.OrangeRed);
             }
 
@@ -241,12 +240,12 @@ namespace GarMon.App
                 txbEStatus.Text = "";
             else if (open && !sent)
             {
-                txbEStatus.Text = $"Not Sent: {checksToEmail - checks} left";
+                txbEStatus.Text = $"Not Sent: {checksToEmail - checks} remaining";
                 txbEStatus.Foreground = new SolidColorBrush(Colors.DarkCyan);
             }
             else if (open && sent)
             {
-                txbEStatus.Text = "Email ::SENT::";
+                txbEStatus.Text = "Email : SENT";
                 txbEStatus.Foreground = new SolidColorBrush(Colors.OrangeRed);
             }
             else if(!open && sent)
