@@ -62,7 +62,6 @@ C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\bin\x64\Debug\MimeKit.dl
 C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\bin\x64\Debug\BouncyCastle.Crypto.dll
 C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\bin\x64\Debug\System.Runtime.dll
 C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\bin\x64\Debug\Microsoft.UI.Xaml.Markup.winmd
-C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\obj\x64\Debug\GarMon.App.csprojAssemblyReference.cache
 C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\obj\x64\Debug\App.g.i.cs
 C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\obj\x64\Debug\App.g.cs
 C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\obj\x64\Debug\MainPage.g.i.cs
@@ -95,3 +94,4 @@ C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\obj\x64\Debug\qualifiers
 C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\obj\x64\Debug\MultipleQualifiersPerDimensionFound.txt
 C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\obj\x64\Debug\ProjectArchitectures.txt
 C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\obj\x64\Debug\.winmd_cache\$Microsoft.UI.Xaml.Markup.winmd_636758804200000000.json
+C:\Users\jared.b.PF\source\AlbinoDyno\GarMon\GarMon.App\obj\x64\Debug\GarMon.App.csprojAssemblyReference.cache

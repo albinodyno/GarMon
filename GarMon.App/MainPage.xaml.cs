@@ -26,14 +26,14 @@ namespace GarMon.App
 {
     public sealed partial class MainPage : Page
     {
-        int tickInterval = 30;
+        int checkInterval = 30;
         int checksToEmail = 3;
 
         int ticks = 0;
         int checks = 0;
 
-        bool sqlOffline = true;
-        bool sensorOffline = true;
+        bool sqlOnline = false;
+        bool sensorOnline = false;
         bool open = false;
         bool sent = false;
 
@@ -64,25 +64,24 @@ namespace GarMon.App
         private void TimerTick(object sender, object e)
         {
             ticks++;
-            txbTimer.Text = (tickInterval - ticks).ToString();
+            txbTimer.Text = (checkInterval - ticks).ToString();
             //SendEmail();
 
-            if (ticks >= tickInterval)
+            if (ticks >= checkInterval)
             {
                 ticks = 0;
 
-                if (sensorOffline)
+                if (!sensorOnline)
                     SetupGPIOPins();
 
                 CheckDoor();
-                UpdateSQL();
                 UpdateBoard();
             }
         }
 
         private void SetupGPIOPins()
         {
-            #region
+            #region Notes
             // Latch HIGH value first. This ensures a default value when the pin is set as output
             //reedPin.Write(GpioPinValue.High);
 
@@ -97,7 +96,6 @@ namespace GarMon.App
 
 
             #endregion
-
             try
             {
                 gpio = GpioController.GetDefault();
@@ -107,11 +105,11 @@ namespace GarMon.App
 
                 reedValue = reedPin.Read();
                 reedPin.ValueChanged += PinChange;
-                sensorOffline = false;
+                sensorOnline = true;
             }
             catch (Exception ex)
             {
-                sensorOffline = true;
+                sensorOnline = false;
                 checks = 0;
                 sent = false;
                 open = false;
@@ -128,34 +126,36 @@ namespace GarMon.App
             {
                 open = false;
             }
+
+            UpdateSQL();
         }
 
         private void SetupSqlConn()
         {
             try
             {
-                sqlConn = @"Server=tcp:WAMPA,49172\SQLEXPRESS;Database=GarMonDB;Trusted_Connection=True;User Id=albinodyno;Password=thelivingshitouttame";
+                sqlConn = @"Server=tcp:WAMPA,49172\SQLEXPRESS;Database=BarringtonDB;Trusted_Connection=True;User Id=albinodyno;Password=thelivingshitouttame";
 
                 SqlConnection connection = new SqlConnection(sqlConn);
-                SqlCommand cmd = new SqlCommand("GMTestSetup", connection);
+                SqlCommand cmd = new SqlCommand("AppTestConnection", connection);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Date", DateTime.Now.ToString());
+                cmd.Parameters.AddWithValue("@App", "GarMon");
 
-                //connection.Open();
+                connection.Open();
                 int i = cmd.ExecuteNonQuery();
                 connection.Close();
 
-                sqlOffline = false;
+                sqlOnline = true;
             }
             catch (Exception ex)
             {
-                sqlOffline = true;
+                sqlOnline = false;
             }
         }
 
         private void CheckDoor()
         {
-            if (sensorOffline)
+            if (!sensorOnline)
                 return;
 
             try
@@ -219,17 +219,17 @@ namespace GarMon.App
             txbChecks.Text = "Checks : " + checks.ToString();
 
             //Update Door Status
-            if (!sensorOffline && !open)
+            if (sensorOnline && !open)
             {
                 txbStatus.Text = "Status : Closed";
                 txbStatus.Foreground = new SolidColorBrush(Colors.DarkCyan);
             }
-            else if(!sensorOffline && open)
+            else if(sensorOnline && open)
             {
                 txbStatus.Text = "Status : OPEN";
                 txbStatus.Foreground = new SolidColorBrush(Colors.OrangeRed);
             }
-            else
+            else if(!sensorOnline)
             {
                 txbStatus.Text = "Status : Unknown";
                 txbStatus.Foreground = new SolidColorBrush(Colors.OrangeRed);
@@ -240,12 +240,12 @@ namespace GarMon.App
                 txbEStatus.Text = "";
             else if (open && !sent)
             {
-                txbEStatus.Text = $"Not Sent: {checksToEmail - checks} remaining";
+                txbEStatus.Text = $"{checksToEmail - checks} remaining to Email";
                 txbEStatus.Foreground = new SolidColorBrush(Colors.DarkCyan);
             }
             else if (open && sent)
             {
-                txbEStatus.Text = "Email : SENT";
+                txbEStatus.Text = "Email Sent";
                 txbEStatus.Foreground = new SolidColorBrush(Colors.OrangeRed);
             }
             else if(!open && sent)
@@ -254,48 +254,59 @@ namespace GarMon.App
             }
 
             //Update Pin Status
-            if (sensorOffline)
-            {
-                txbSensorStatus.Text = "Offline";
-                txbSensorStatus.Foreground = new SolidColorBrush(Colors.OrangeRed);
-            }
-            else
+            if (sensorOnline)
             {
                 txbSensorStatus.Text = "Online";
                 txbSensorStatus.Foreground = new SolidColorBrush(Colors.DarkCyan);
             }
+            else
+            {
+                txbSensorStatus.Text = "Offline";
+                txbSensorStatus.Foreground = new SolidColorBrush(Colors.OrangeRed);
+            }
 
             //Update SQL Status
-            if (sqlOffline)
-            {
-                txbSqlStatus.Text = "Offline";
-                txbSqlStatus.Foreground = new SolidColorBrush(Colors.OrangeRed);
-            }
-            else
+            if (sqlOnline)
             {
                 txbSqlStatus.Text = "Online" + DateTime.Now.ToString();
                 txbSqlStatus.Foreground = new SolidColorBrush(Colors.DarkCyan);
+            }
+            else
+            {
+                txbSqlStatus.Text = "Offline";
+                txbSqlStatus.Foreground = new SolidColorBrush(Colors.OrangeRed);
             }
 
         }
 
         private void UpdateSQL()
         {
-            if (!sqlOffline)
+            if (sqlOnline)
             {
-                SqlConnection connection = new SqlConnection(sqlConn);
-                SqlCommand cmd = new SqlCommand("CheckInsert", connection);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Date", DateTime.Now.ToString());
+                try
+                {
+                    SqlConnection connection = new SqlConnection(sqlConn);
+                    SqlCommand cmd = new SqlCommand("GMDoorLogEntry", connection);
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-                connection.Open();
-                int i = cmd.ExecuteNonQuery();
-                connection.Close();
+                    if (open)
+                        cmd.Parameters.AddWithValue("@Status", "Open");
+                    else
+                        cmd.Parameters.AddWithValue("@Status", "Closed");
 
-                if (i != 0)
-                    txbLastSql.Text = "Successful " + DateTime.Now.ToString();
-                else
-                    txbLastSql.Text = "Unsuccessful " + DateTime.Now.ToString();
+                    connection.Open();
+                    int i = cmd.ExecuteNonQuery();
+                    connection.Close();
+
+                    if (i != 0)
+                        txbLastSql.Text = "Successful : " + DateTime.Now.ToString();
+                    else
+                        txbLastSql.Text = "Unsuccessful : " + DateTime.Now.ToString();
+                }
+                catch (Exception ex)
+                {
+                    SetupSqlConn();
+                }
             }
             else
                 SetupSqlConn();
@@ -303,7 +314,7 @@ namespace GarMon.App
 
         private void SendEmail()
         {
-            var message = new MimeMessage();
+            MimeMessage message = new MimeMessage();
 
             message.Sender = new MailboxAddress("Jared Buchanan", "jbbuchanan266@gmail.com");
             message.To.Add(new MailboxAddress("Jared Buchanan", "jbbuchanan266@gmail.com"));
@@ -314,7 +325,7 @@ namespace GarMon.App
                 Text = $"Garage door open at {DateTime.Now}"
             };
 
-            using (var client = new SmtpClient())
+            using (SmtpClient client = new SmtpClient())
             {
                 client.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
                 client.Authenticate("jbbuchanan266@gmail.com", "Motorola266!");
